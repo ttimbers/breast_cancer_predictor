@@ -1,0 +1,88 @@
+---
+title: "Exploratory data analysis of the Wisconsin Breast Cancer data set"
+output: github_document
+---
+
+```{r setup, include=FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(feather)
+library(tidyverse)
+library(knitr)
+library(caret)
+set.seed(2020)
+```
+
+## Summary of the data set
+
+```{r load data}
+bc_data <- read_feather("../data/raw/wdbc.feather")
+colnames(bc_data) <- c("id",
+                      "class",
+                      "mean_radius",
+                      "mean_texture",
+                      "mean_perimeter", 
+                      "mean_area",
+                      "mean_smoothness",
+                      "mean_compactness",
+                      "mean_concavity",
+                      "mean_concave_points",
+                      "mean_symmetry",
+                      "mean_fractal_dimension",
+                      "se_radius",
+                      "se_texture",
+                      "se_perimeter", 
+                      "se_area",
+                      "se_smoothness",
+                      "se_compactness",
+                      "se_concavity",
+                      "se_concave_points",
+                      "se_symmetry",
+                      "se_fractal_dimension",
+                      "max_radius",
+                      "max_texture",
+                      "max_perimeter", 
+                      "max_area",
+                      "max_smoothness",
+                      "max_compactness",
+                      "max_concavity",
+                      "max_concave_points",
+                      "max_symmetry",
+                      "max_fractal_dimension")
+n_nas <- nrow(bc_data) - (drop_na(bc_data) %>% tally())
+```
+
+The data set used in this project is of [digitized breast cancer image features](http://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29), created by Dr. William H. Wolberg, W. Nick Street, and Olvi L. Mangasarian at the University of Wisconsin, Madison. Each row in the data set represents an image of a tumour sample, including the diagnosis (benign or malignant) and several other measurements (e.g., nucleus texture, perimeter, area, etc.). Diagnosis for each image was conducted by physicians. There are `r nrow(bc_data)` observations in the data set, and `r ncol(bc_data) - 1` features. There are `r n_nas` observations with missing values in the data set. Below we show the number of each observations for each of the classes in the data set. 
+
+```{r class counts}
+kable(summarise(bc_data,
+          `benign cases` = sum(class  == "B"),
+          `malignant cases` = sum(class  == "M")),
+      caption = "Table 1. Counts of observation for each class.")
+```
+
+
+## Split into training and test data set
+
+Before proceeding further, we will split the data such that 75% of observations are in the training and 25% of observations are in the test set. Below we list the counts of observations:
+
+```{r split data}
+# drop id and convert class to factor
+bc_data <- bc_data %>% 
+    select(-id) %>% 
+    mutate(class = as.factor(class))
+  
+# split into training and test data sets
+training_rows <- bc_data %>% 
+    select(class) %>% 
+    pull() %>%
+    createDataPartition(p = 0.75, list = FALSE)
+training_data <- bc_data %>% slice(training_rows)
+test_data <- bc_data %>% slice(-training_rows)
+
+
+```
+
+
+
+## Exploratory analysis on the training data set
+
