@@ -98,7 +98,7 @@ kable(bind_rows(train_counts, test_counts),
 
 There is a minor class imbalance, but it is not so great that we will plan to immediately start our modeling plan with over- or under-sampling. If during initial tuning, there are indicators that it may in fact be a greater problem than anticipated (e.g., if the confusion matrix indicates that the model makes a lot more mistakes on the minority class, here malignant cases) then we will only then start to explore whether empoying techniques to address class imbalance may be of help to improving model performance in regards to predicting the minority class.
 
-## Exploratory analysis on the training data set
+# Exploratory analysis on the training data set
 
 To look at whether each of the predictors might be useful to predict the tumour class, we plotted the distributions of each predictor from the training data set and coloured the distribution by class (benign: blue and malignant: orange). In doing this we see that class distributions for all of the mean and max predictors for all the measurements overlap somewhat, but do show quite a difference in their centres and spreads. This is less so for the standard error (se) predictors. In particular, the standard errors of fractal dimension, smoothness, symmetry and texture look very similar in both the distribution centre and spread. Thus, we might choose to omit these from our model.
 

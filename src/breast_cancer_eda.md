@@ -49,7 +49,7 @@ to explore whether empoying techniques to address class imbalance may be
 of help to improving model performance in regards to predicting the
 minority class.
 
-## Exploratory analysis on the training data set
+# Exploratory analysis on the training data set
 
 To look at whether each of the predictors might be useful to predict the
 tumour class, we plotted the distributions of each predictor from the
