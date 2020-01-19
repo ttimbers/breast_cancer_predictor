@@ -14,20 +14,20 @@ For this project we are trying to answer the question: given tumour
 image measurements is a newly discovered tumour benign or malignant?
 Answering this question is important because traditional,
 non-data-driven methods for tumour diagnosis are quite subjective and
-dependent upon how skilled and experienced the diagnosing physician is.
-Furthermore, benign tumours are not normally dangerous; the cells stay
-in the same place and the tumour stops growing before it gets very
-large. By contrast, in malignant tumours, the cells invade the
-surrounding tissue and spread into nearby organs where they can cause
-serious damage (learn more about cancer here). Thus, it is important to
+can depend on the diagnosing physicians skill as well as experience
+(Street, Wolberg, and Mangasarian 1993). Furthermore, benign tumours are
+not normally dangerous; the cells stay in the same place and the tumour
+stops growing before it gets very large. By contrast, in malignant
+tumours, the cells invade the surrounding tissue and spread into nearby
+organs where they can cause serious damage. Thus, it is important to
 quickly and accurately diagnose the tumour type to guide patient
 treatment.
 
 The data set used in this project is of digitized breast cancer image
 features created by Dr. William H. Wolberg, W. Nick Street, and Olvi L.
-Mangasarian at the University of Wisconsin, Madison. It was sourced from
-the UCI Machine Learning Repository (Dua and Graff 2017) and can be
-found
+Mangasarian at the University of Wisconsin, Madison (Street, Wolberg,
+and Mangasarian 1993). It was sourced from the UCI Machine Learning
+Repository (Dua and Graff 2017) and can be found
 [here](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+\(Diagnostic\)),
 specifically [this
 file](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data).
@@ -108,6 +108,16 @@ re-using/re-mixing please provide attribution and link to this webpage.
 Dua, Dheeru, and Casey Graff. 2017. “UCI Machine Learning Repository.”
 University of California, Irvine, School of Information; Computer
 Sciences. <http://archive.ics.uci.edu/ml>.
+
+</div>
+
+<div id="ref-Streetetal">
+
+Street, W. Nick, W. H. Wolberg, and O. L. Mangasarian. 1993. “Nuclear
+feature extraction for breast tumor diagnosis.” In *Biomedical Image
+Processing and Biomedical Visualization*, edited by Raj S. Acharya and
+Dmitry B. Goldgof, 1905:861–70. International Society for Optics;
+Photonics; SPIE. <https://doi.org/10.1117/12.148698>.
 
 </div>
 
