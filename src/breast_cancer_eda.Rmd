@@ -1,18 +1,22 @@
 ---
 title: "Exploratory data analysis of the Wisconsin Breast Cancer data set"
 output: github_document
+bibliography: ../doc/breast_cancer_refs.bib
 ---
 
-```{r setup, include=FALSE, warning = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message=FALSE)
 library(feather)
 library(tidyverse)
 library(knitr)
 library(caret)
+library(ggridges)
+library(ggthemes)
+theme_set(theme_minimal())
 set.seed(2020)
 ```
 
-## Summary of the data set
+# Summary of the data set
 
 ```{r load data}
 bc_data <- read_feather("../data/raw/wdbc.feather")
@@ -51,19 +55,19 @@ colnames(bc_data) <- c("id",
 n_nas <- nrow(bc_data) - (drop_na(bc_data) %>% tally())
 ```
 
-The data set used in this project is of [digitized breast cancer image features](http://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29), created by Dr. William H. Wolberg, W. Nick Street, and Olvi L. Mangasarian at the University of Wisconsin, Madison. Each row in the data set represents an image of a tumour sample, including the diagnosis (benign or malignant) and several other measurements (e.g., nucleus texture, perimeter, area, etc.). Diagnosis for each image was conducted by physicians. There are `r nrow(bc_data)` observations in the data set, and `r ncol(bc_data) - 1` features. There are `r n_nas` observations with missing values in the data set. Below we show the number of each observations for each of the classes in the data set. 
+The data set used in this project is of digitized breast cancer image features created by Dr. William H. Wolberg, W. Nick Street, and Olvi L. Mangasarian at the University of Wisconsin, Madison.  It was sourced from the UCI Machine Learning Repository [@Dua2019] and can be found [here](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)), specifically [this file](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data). Each row in the data set represents an image of a tumour sample, including the diagnosis (benign or malignant) and several other measurements (e.g., nucleus texture, perimeter, area, etc.). Diagnosis for each image was conducted by physicians. There are `r nrow(bc_data)` observations in the data set, and `r ncol(bc_data) - 1` features. There are `r n_nas` observations with missing values in the data set. Below we show the number of each observations for each of the classes in the data set. 
 
 ```{r class counts}
 kable(summarise(bc_data,
-          `benign cases` = sum(class  == "B"),
-          `malignant cases` = sum(class  == "M")),
+                `Benign cases` = sum(class  == "B"),
+                `Malignant cases` = sum(class  == "M")),
       caption = "Table 1. Counts of observation for each class.")
 ```
 
 
-## Split into training and test data set
+# Partition the data set into training and test sets
 
-Before proceeding further, we will split the data such that 75% of observations are in the training and 25% of observations are in the test set. Below we list the counts of observations:
+Before proceeding further, we will split the data such that 75% of observations are in the training and 25% of observations are in the test set. Below we list the counts of observations for each class:
 
 ```{r split data}
 # drop id and convert class to factor
@@ -79,10 +83,38 @@ training_rows <- bc_data %>%
 training_data <- bc_data %>% slice(training_rows)
 test_data <- bc_data %>% slice(-training_rows)
 
-
+train_counts <- summarise(training_data,
+                          `Data partition` = "Training",
+                          `Benign cases` = sum(class  == "B"),
+                          `Malignant cases` = sum(class  == "M"))
+test_counts <- summarise(test_data,
+                         `Data partition` = "Test",
+                         `Benign cases` = sum(class  == "B"),
+                         `Malignant cases` = sum(class  == "M"))
+kable(bind_rows(train_counts, test_counts),
+      caption = "Table 2. Counts of observation for each class for each data partition.")
 ```
 
-
+There is a minor class imbalance, but it is not so great that we will plan to immediately start our modeling plan with over- or under-sampling. If during initial tuning, there are indicators that it may in fact be a greater problem than anticipated (e.g., if the confusion matrix indicates that the model makes a lot more mistakes on the minority class, here malignant cases) then we will only then start to explore whether empoying techniques to address class imbalance may be of help to improving model performance in regards to predicting the minority class.
 
 ## Exploratory analysis on the training data set
 
+To look at whether each of the predictors might be useful to predict the tumour class, we plotted the distributions of each predictor from the training data set and coloured the distribution by class (benign: blue and malignant: orange). In doing this we see that class distributions for all of the mean and max predictors for all the measurements overlap somewhat, but do show quite a difference in their centres and spreads. This is less so for the standard error (se) predictors. In particular, the standard errors of fractal dimension, smoothness, symmetry and texture look very similar in both the distribution centre and spread. Thus, we might choose to omit these from our model.
+
+```{r predictor distributions, fig.width=8, fig.height=10, fig.cap="Distribution of training set predictors for the benign (B) and malignant (M) tumour cases."}
+training_data %>% 
+  gather(key = predictor, value = value, -class) %>% 
+  mutate(predictor = str_replace_all(predictor, "_", " ")) %>% 
+  ggplot(aes(x = value, y = class, colour = class, fill = class)) +
+      facet_wrap(. ~ predictor, scale = "free", ncol = 4) +
+      geom_density_ridges(alpha = 0.8) +
+      scale_fill_tableau() +
+      scale_colour_tableau() +
+      guides(fill = FALSE, color = FALSE) +
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank())
+```
+
+Figure 1. Distribution of training set predictors for the benign (B) and malignant (M) tumour cases.
+
+# References
