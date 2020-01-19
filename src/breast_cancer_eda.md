@@ -70,7 +70,7 @@ malignant (M) tumour cases.
 
 # References
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 
 <div id="ref-Dua2019">
 

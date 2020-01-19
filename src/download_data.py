@@ -12,6 +12,7 @@ Options:
 """
   
 from docopt import docopt
+import requests
 import os
 import pandas as pd
 import feather
@@ -19,7 +20,13 @@ import feather
 opt = docopt(__doc__)
 
 def main(out_type, url, out_file):
-  
+  try: 
+    request = requests.get(url)
+    request.status_code == 200
+  except Exception as req:
+    print("Website at the provided url does not exist.")
+    print(req)
+    
   data = pd.read_csv(url, header=None)
   
   if out_type == "csv":
