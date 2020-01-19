@@ -30,3 +30,6 @@ Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')"
   - caret==6.0-84
   - ggridges==0.5.1
   - ggthemes==4.2.0
+  
+## License
+The Breast Cancer Predictor materials here are licensed under the Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA). If re-using/re-mixing please provide attribution and link to this webpage.
