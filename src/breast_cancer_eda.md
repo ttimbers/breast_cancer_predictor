@@ -5,19 +5,20 @@ Exploratory data analysis of the Wisconsin Breast Cancer data set
 
 The data set used in this project is of digitized breast cancer image
 features created by Dr. William H. Wolberg, W. Nick Street, and Olvi L.
-Mangasarian at the University of Wisconsin, Madison. It was sourced from
-the UCI Machine Learning Repository (Dua and Graff 2017) and can be
-found
+Mangasarian at the University of Wisconsin, Madison (Street, Wolberg,
+and Mangasarian 1993). It was sourced from the UCI Machine Learning
+Repository (Dua and Graff 2017) and can be found
 [here](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+\(Diagnostic\)),
 specifically [this
 file](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data).
-Each row in the data set represents an image of a tumour sample,
-including the diagnosis (benign or malignant) and several other
-measurements (e.g., nucleus texture, perimeter, area, etc.). Diagnosis
-for each image was conducted by physicians. There are 569 observations
-in the data set, and 31 features. There are 0 observations with missing
-values in the data set. Below we show the number of each observations
-for each of the classes in the data set.
+Each row in the data set represents summary statistics from measurements
+of an image of a tumour sample, including the diagnosis (benign or
+malignant) and several other measurements (e.g., nucleus texture,
+perimeter, area, etc.). Diagnosis for each image was conducted by
+physicians. There are 569 observations in the data set, and 31 features.
+There are 0 observations with missing values in the data set. Below we
+show the number of each observations for each of the classes in the data
+set.
 
 | Benign cases | Malignant cases |
 | -----------: | --------------: |
@@ -77,6 +78,16 @@ malignant (M) tumour cases.
 Dua, Dheeru, and Casey Graff. 2017. “UCI Machine Learning Repository.”
 University of California, Irvine, School of Information; Computer
 Sciences. <http://archive.ics.uci.edu/ml>.
+
+</div>
+
+<div id="ref-Streetetal">
+
+Street, W. Nick, W. H. Wolberg, and O. L. Mangasarian. 1993. “Nuclear
+feature extraction for breast tumor diagnosis.” In *Biomedical Image
+Processing and Biomedical Visualization*, edited by Raj S. Acharya and
+Dmitry B. Goldgof, 1905:861–70. International Society for Optics;
+Photonics; SPIE. <https://doi.org/10.1117/12.148698>.
 
 </div>
 

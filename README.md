@@ -31,10 +31,11 @@ Repository (Dua and Graff 2017) and can be found
 [here](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+\(Diagnostic\)),
 specifically [this
 file](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data).
-Each row in the data set represents an image of a tumour sample,
-including the diagnosis (benign or malignant) and several other
-measurements (e.g., nucleus texture, perimeter, area, etc.). Diagnosis
-for each image was conducted by physicians.
+Each row in the data set represents summary statistics from measurements
+of an image of a tumour sample, including the diagnosis (benign or
+malignant) and several other measurements (e.g., nucleus texture,
+perimeter, area, etc.). Diagnosis for each image was conducted by
+physicians.
 
 To answer the predictive question posed above, we plan to build a
 predictive classification model. Before building our model we will
@@ -49,18 +50,18 @@ predictor distributions across classes will be plotted as facetted (by
 predictor) ridge plots where the densities are coloured by class.
 
 Given that all measurements are continous in nature, and the outcome we
-are trying to predict is one of two classes, one suitable and simple we
-plan to first explore is using a k-nearest neighbours classification
-algorithm. With this algorithm, we will have to choose \(K\) the number
-of nearest neighbours to use for prediction. We will choose \(K\) via
-cross-validation using ~ 30 folds as this Wisconsin Breast Cancer data
-set is not very large and has only 569 observations. We will use overall
-accuracy to choose \(K\). A line plot of overall accuracy versus \(K\)
-will be included as part of the final report for this project.
+are trying to predict is one of two classes, one suitable and simple
+approach that we plan to first explore is using a k-nearest neighbours
+classification algorithm. With this algorithm, we will have to choose K,
+the number of nearest neighbours to use for prediction. We will choose K
+via cross-validation using ~ 30 folds because this Wisconsin Breast
+Cancer data set is not very large, having only 569 observations. We will
+use overall accuracy to choose K. A line plot of overall accuracy versus
+\(K\) will be included as part of the final report for this project.
 
-After settling on our final model, we will re-fit the model on the
-entire training data set, and then evaulate it’s performance on the test
-data set. At this point we will look at overall accuracy as well as
+After selecting our final model, we will re-fit the model on the entire
+training data set, and then evaulate it’s performance on the test data
+set. At this point we will look at overall accuracy as well as
 misclassification errors (from the confusion matrix) to assess
 prediction performance. These values will be reported as a table in the
 final report.
