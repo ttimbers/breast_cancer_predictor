@@ -102,7 +102,7 @@ There is a minor class imbalance, but it is not so great that we will plan to im
 
 To look at whether each of the predictors might be useful to predict the tumour class, we plotted the distributions of each predictor from the training data set and coloured the distribution by class (benign: blue and malignant: orange). In doing this we see that class distributions for all of the mean and max predictors for all the measurements overlap somewhat, but do show quite a difference in their centres and spreads. This is less so for the standard error (se) predictors. In particular, the standard errors of fractal dimension, smoothness, symmetry and texture look very similar in both the distribution centre and spread. Thus, we might choose to omit these from our model.
 
-```{r predictor distributions, fig.width=8, fig.height=10, fig.cap="Distribution of training set predictors for the benign (B) and malignant (M) tumour cases."}
+```{r predictor distributions, fig.width=8, fig.height=10}
 training_data %>% 
   gather(key = predictor, value = value, -class) %>% 
   mutate(predictor = str_replace_all(predictor, "_", " ")) %>% 

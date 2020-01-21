@@ -15,19 +15,30 @@ library(feather)
 library(tidyverse)
 library(caret)
 library(docopt)
-set.seed(2020)
+library(ggridges)
+library(ggthemes)
+theme_set(theme_minimal())
 
 opt <- docopt(doc)
 
 main <- function(train, out_dir) {
+
+  # visualize predictor distributions by class
   train_data <- read_feather(train) %>% 
     gather(key = predictor, value = value, -class) %>% 
-    ggplot(aes(x = value, fill = class)) +
-      geom_histogram() +
-      facet_wrap(. ~ predictor, nrow = 5)
+    mutate(predictor = str_replace_all(predictor, "_", " ")) %>% 
+    ggplot(aes(x = value, y = class, colour = class, fill = class)) +
+    facet_wrap(. ~ predictor, scale = "free", ncol = 4) +
+    geom_density_ridges(alpha = 0.8) +
+    scale_fill_tableau() +
+    scale_colour_tableau() +
+    guides(fill = FALSE, color = FALSE) +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_blank())
   ggsave(paste0(out_dir, "/predictor_distributions_across_class.png"), 
          train_data,
-         width = 6, 
-         height = 8)
+         width = 8, 
+         height = 10)
 }
+
 main(opt[["--train"]], opt[["--out_dir"]])

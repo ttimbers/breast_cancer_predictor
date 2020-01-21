@@ -39,7 +39,8 @@ main <- function(train, out_dir) {
   accuracy_vs_k <- model_cv_30fold$results %>% 
     ggplot(aes(x = k, y = Accuracy)) +
       geom_point() +
-      xlab("30-fold cross-validation accuracy")
+      xlab("K") +
+      ylab("30-fold cross-validation accuracy") 
   try({
     dir.create(out_dir)
   })

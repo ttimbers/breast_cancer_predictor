@@ -62,16 +62,14 @@ the standard errors of fractal dimension, smoothness, symmetry and
 texture look very similar in both the distribution centre and spread.
 Thus, we might choose to omit these from our model.
 
-![Distribution of training set predictors for the benign (B) and
-malignant (M) tumour
-cases.](breast_cancer_eda_files/figure-gfm/predictor%20distributions-1.png)
+![](breast_cancer_eda_files/figure-gfm/predictor%20distributions-1.png)<!-- -->
 
 Figure 1. Distribution of training set predictors for the benign (B) and
 malignant (M) tumour cases.
 
 # References
 
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 
 <div id="ref-Dua2019">
 

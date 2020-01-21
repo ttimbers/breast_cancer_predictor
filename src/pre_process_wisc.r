@@ -20,7 +20,40 @@ set.seed(2020)
 opt <- docopt(doc)
 main <- function(input, out_dir){
   # read data and convert class to factor
-  raw_data <- read_bc_data(input) %>% 
+  raw_data <- read_feather(input) 
+  colnames(raw_data) <- c("id",
+                         "class",
+                         "mean_radius",
+                         "mean_texture",
+                         "mean_perimeter", 
+                         "mean_area",
+                         "mean_smoothness",
+                         "mean_compactness",
+                         "mean_concavity",
+                         "mean_concave_points",
+                         "mean_symmetry",
+                         "mean_fractal_dimension",
+                         "se_radius",
+                         "se_texture",
+                         "se_perimeter", 
+                         "se_area",
+                         "se_smoothness",
+                         "se_compactness",
+                         "se_concavity",
+                         "se_concave_points",
+                         "se_symmetry",
+                         "se_fractal_dimension",
+                         "max_radius",
+                         "max_texture",
+                         "max_perimeter", 
+                         "max_area",
+                         "max_smoothness",
+                         "max_compactness",
+                         "max_concavity",
+                         "max_concave_points",
+                         "max_symmetry",
+                         "max_fractal_dimension")
+  raw_data <- raw_data %>% 
     select(-id) %>% 
     mutate(class = as.factor(class))
   
@@ -54,28 +87,6 @@ main <- function(input, out_dir){
   # write training and test data to feather files
   write_feather(training_scaled, paste0(out_dir, "/training.feather"))
   write_feather(test_scaled, paste0(out_dir, "/test.feather"))
-}
-
-read_bc_data <- function(path, file_type = "feather") {
-  if (file_type == "feather") {
-    data <- read_feather(path, columns = c(1, 2, 23:32))
-  } else if (file_type == "csv") {
-    data <- read_csv(path, col_names = TRUE) %>% 
-      select(c(1, 2, 23:32))
-  }
-  colnames(data) <- c("id",
-                      "class",
-                      "radius",
-                      "texture",
-                      "perimeter", 
-                      "area",
-                      "smoothness",
-                      "compactness",
-                      "concavity",
-                      "concave_points",
-                      "symmetry",
-                      "fractal_dimension")
-  data
 }
 
 main(opt[["--input"]], opt[["--out_dir"]])
