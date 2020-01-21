@@ -5,7 +5,7 @@ date: "2019/12/30 (updated: `r Sys.Date()`)"
 output: 
   github_document:
     toc: true
-bibliography: breast_cancer_references.bib
+bibliography: breast_cancer_refs.bib
 ---
 
 ```{r setup, include=FALSE}
