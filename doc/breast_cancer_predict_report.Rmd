@@ -1,0 +1,73 @@
+---
+title: "Predicting breast cancer from digitized images of breast mass"
+author: "Tiffany A. Timbers </br>"
+date: "2019/12/30 (updated: `r Sys.Date()`)"
+output: 
+  github_document:
+    toc: true
+bibliography: breast_cancer_references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(caret)
+```
+
+# Summary
+
+# Introduction
+
+# Methods
+
+## Data
+The data used to train and test the breast cancer predictive model was sourced from the UCI Machine Learning Repository [@Dua2019] and can be found [here](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)), specifically [this file](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data). Only the following 11 variables were used in the analysis:
+
+- class
+- maximum area
+- maximum compactness
+- maximum concave_points
+- maximum concavity
+- maximum fractal_dimension
+- maximum perimeter
+- maximum radius
+- maximum smoothness
+- maximum symmetry
+- maximum texture
+
+## Analysis
+The k-nearest neighbors (k-nn) algorithm was used to build a classification model to predict whether a tumour mass was benign or malignant (found in the class column of the data set). The remaining 9 variables listed above were used as predictors in the model. The hyperparameter $K$ was chosen using 10-fold cross validation with overall classification accuracy as the loss function. The R and Python programming languages [@R; @Python] and the following R and Python packages were used to perform the analysis: caret [@caret], docopt [@docopt], feather [@feather], knitr [@knitr], tidyverse [@tidyverse], docopt [@docoptpython], os [@Python], feather [@feather] Pandas [@mckinney-proc-scipy-2010]. The code used to perform the analysis and create this report can be found here: https://github.com/ttimbers/breast_cancer_predictor.
+
+# Results & Discussion
+
+```{r predictor-distributions, echo=FALSE, fig.cap="Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses.", out.width = '60%'}
+knitr::include_graphics("../results/predictor_distributions_across_class.png")
+```
+
+```{r choosing-k, echo=FALSE, fig.cap="30-fold cross validation classification accuracy as K is varied.", out.width = '40%'}
+knitr::include_graphics("../results/accuracy_vs_k.png")
+```
+
+trete
+
+
+
+```{r model-quality, echo=FALSE}
+model_quality <- readRDS("../results/final_model_quality.rds")
+```
+
+`r round(model_quality$overall[1], 2)`
+
+
+```{r confusion-matrix, echo=FALSE}
+kable(model_quality$table, format = "latex", caption = "Confusion matrix of model performance on test data. ") %>%
+  kable_styling() %>%
+  add_header_above(c(" ", "Reference" = 2)) %>% 
+  pack_rows("Predicted", 1, 2)
+```
+
+
+# References
+
