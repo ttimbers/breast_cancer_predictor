@@ -28,8 +28,26 @@ Thus far we have performed some exploratory data analysis, and the report for th
 To replicate the analysis, clone this GitHub repository, install the [dependencies](#dependencies) listed below, and run the following commands at the command line/terminal from the root directory of this project:
 
 ```
+# download data
 python src/download_data.py --out_type=feather --url=http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data --out_file=data/raw/wdbc.feather
+
+# run eda report
 Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')"
+
+# pre-process data 
+Rscript src/pre_process_wisc.r --input=data/raw/wdbc.feather --out_dir=data/processed 
+
+# create exploratory data analysis figure and write to file 
+Rscript src/eda_wisc.r --train=data/processed/training.feather --out_dir=results
+
+# tune model
+Rscript src/fit_breast_cancer_predict_model.r --train=data/processed/training.feather --out_dir=results
+
+# test model
+Rscript src/breast_cancer_test_results.r --test=data/processed/test.feather --out_dir=results
+
+# render final report
+Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_format = 'github_document')"
 ```
 
 ## Dependencies
