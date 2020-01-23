@@ -5,13 +5,26 @@ Tiffany A. Timbers </br>
 
 # Summary
 
-Here we attempt to build a classification model which can use breast
-cancer tumour image measurements to predict whether a newly discovered
-breast cancer tumour is benign (i.e., is not harmful and does not
-require treatment) or malignant (i.e., is harmful and requires treatment
-intervention).
+Here we attempt to build a classification model using the k-nearest
+neighbours algorithm which can use breast cancer tumour image
+measurements to predict whether a newly discovered breast cancer tumour
+is benign (i.e., is not harmful and does not require treatment) or
+malignant (i.e., is harmful and requires treatment intervention). Our
+final classifier performed fairly well on an unseen test data set, with
+Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
+0.97. On the 142 test data cases, it correctly predicted 138. However it
+incorrectly predicted 4 cases, and importantly these cases were false
+negatives; predicting that a tumour is benign when in fact it is
+malignant. These kind of incorrect predictions could have a severly
+negative impact on a patients health outcome, thus we recommend
+continuing study to improve this prediction model before it is put into
+production in the clinic.
 
 # Introduction
+
+TO ADD: General introduction about the problem, and why it is important
+(e.g., how prevalent breast cancer is, the mortality rate for
+undiagnosed cancer, etc).
 
 For this project we are trying to answer the question: given tumour
 image measurements is a newly discovered tumour benign or malignant?
@@ -48,23 +61,21 @@ physicians.
 
 The k-nearest neighbors (k-nn) algorithm was used to build a
 classification model to predict whether a tumour mass was benign or
-malignant (found in the class column of the data set). The remaining 9
-variables listed above were used as predictors in the model. The
-hyperparameter \(K\) was chosen using 10-fold cross validation with
-overall classification accuracy as the loss function. The R and Python
-programming languages (R Core Team 2019; Van Rossum and Drake 2009) and
-the following R and Python packages were used to perform the analysis:
-caret (Jed Wing et al. 2019), docopt (de Jonge 2018), feather (Wickham
-2019), knitr (Xie 2014), tidyverse (Wickham 2017), docopt (Keleshev
-2014), os (Van Rossum and Drake 2009), feather (Wickham 2019) Pandas
-(McKinney 2010). The code used to perform the analysis and create this
-report can be found here:
+malignant (found in the class column of the data set). All variables
+included in the original data set, with the exception of the standard
+error of fractal dimension, smoothness, symmetry and texture were used
+to fit the model. The hyperparameter \(K\) was chosen using 30-fold
+cross validation with Cohen’s Kappa as the classification metric. The R
+and Python programming languages (R Core Team 2019; Van Rossum and Drake
+2009) and the following R and Python packages were used to perform the
+analysis: caret (Jed Wing et al. 2019), docopt (de Jonge 2018), feather
+(Wickham 2019), knitr (Xie 2014), tidyverse (Wickham 2017), docopt
+(Keleshev 2014), os (Van Rossum and Drake 2009), feather (Wickham 2019)
+Pandas (McKinney 2010). The code used to perform the analysis and create
+this report can be found here:
 <https://github.com/ttimbers/breast_cancer_predictor>.
 
 # Results & Discussion
-
-    ##   k
-    ## 1 5
 
 To look at whether each of the predictors might be useful to predict the
 tumour class, we plotted the distributions of each predictor from the
@@ -75,7 +86,7 @@ somewhat, but do show quite a difference in their centres and spreads.
 This is less so for the standard error (se) predictors. In particular,
 the standard errors of fractal dimension, smoothness, symmetry and
 texture look very similar in both the distribution centre and spread.
-Thus, we might choose to omit these from our
+Thus, we choose to omit these from our
 model.
 
 <div class="figure">
@@ -115,7 +126,7 @@ Kappa was used as the classification metric as K was varied.
 Our prediction model performed quite well on test data, with a final
 Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
 0.97. Other indicators that our model performed well come from the
-confusion matrix, where it only made 7 mistakes. However all 7 mistakes
+confusion matrix, where it only made 4 mistakes. However all 4 mistakes
 were predicting a malignant tumour as benign, given the impications this
 has for patients health, this model is not good enough to yet implement
 in the clinic.
@@ -230,6 +241,9 @@ M
 </tbody>
 
 </table>
+
+TO ADD: Further discussion of model results, including how it might be
+improved with more work.
 
 # References
 
