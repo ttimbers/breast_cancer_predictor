@@ -8,7 +8,7 @@ Demo of a data analysis project for DSCI 522 (Data Science workflows); a
 course in the Master of Data Science program at the University of
 British Columbia.
 
-## Introduction
+## About
 
 Here we attempt to build a classification model using the k-nearest
 neighbours algorithm which can use breast cancer tumour image
@@ -23,8 +23,7 @@ negatives; predicting that a tumour is benign when in fact it is
 malignant. These kind of incorrect predictions could have a severly
 negative impact on a patients health outcome, thus we recommend
 continuing study to improve this prediction model before it is put into
-production in the clinic. The final report can be found
-[here](https://ttimbers.github.io/breast_cancer_predictor/doc/breast_cancer_predict_report.html).
+production in the clinic.
 
 The data set that was used in this project is of digitized breast cancer
 image features created by Dr. William H. Wolberg, W. Nick Street, and
@@ -39,6 +38,11 @@ of an image of a tumour sample, including the diagnosis (benign or
 malignant) and several other measurements (e.g., nucleus texture,
 perimeter, area, etc.). Diagnosis for each image was conducted by
 physicians.
+
+## Report
+
+The final report can be found
+[here](https://ttimbers.github.io/breast_cancer_predictor/doc/breast_cancer_predict_report.html).
 
 ## Usage
 
