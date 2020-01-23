@@ -18,6 +18,8 @@ library(docopt)
 set.seed(2020)
 
 opt <- docopt(doc)
+train <- "data/processed/training.feather"
+
 
 main <- function(train, out_dir) {
 
@@ -30,28 +32,27 @@ main <- function(train, out_dir) {
     select(class) %>% 
     mutate(class = as.factor(class)) %>% 
     pull()
-  k = data.frame(k = seq(1, 200, by = 2))
+  k = data.frame(k = seq(1, 100, by = 2))
   cross_val <- trainControl(method="cv", number = 30)
-  model_cv_30fold <- train(x = x_train, y = y_train, method = "knn", tuneGrid = k, trControl = cross_val)
+  model_cv_30fold <- train(x = x_train, y = y_train, method = "knn", 
+                           metric = "Kappa", tuneGrid = k, trControl = cross_val)
   
-  # Visualize accuracy for K's ----------------------------------------------
+  # Visualize kappa for K's ----------------------------------------------
 
-  accuracy_vs_k <- model_cv_30fold$results %>% 
-    ggplot(aes(x = k, y = Accuracy)) +
+  kappa_vs_k <- model_cv_30fold$results %>% 
+    ggplot(aes(x = k, y = Kappa)) +
       geom_point() +
+      geom_errorbar(aes(ymin = Kappa - (KappaSD/sqrt(30)), ymax = Kappa + (KappaSD/sqrt(30)))) +
       xlab("K") +
-      ylab("30-fold cross-validation accuracy") 
+      ylab("Average Cohen's Kappa \n (30-fold cross-validation)") 
   try({
     dir.create(out_dir)
   })
-  ggsave(paste0(out_dir, "/accuracy_vs_k.png"), width = 4, height = 4)
+  ggsave(paste0(out_dir, "/kappa_vs_k.png"), width = 6, height = 4)
   
   # Fit final model ---------------------------------------------------------
-  best_k <- model_cv_30fold$result %>% 
-    filter(Accuracy == max(Accuracy)) %>% 
-    select(k) %>% 
-    pull()
-  final_model <- train(x = x_train, y = y_train, method = "knn", tuneGrid = data.frame(k = best_k))
+  final_model <- train(x = x_train, y = y_train, method = "knn", 
+                       tuneGrid = data.frame(k = model_cv_30fold$bestTune$k))
   saveRDS(final_model, file = paste0(out_dir, "/final_model.rds"))
 }
   

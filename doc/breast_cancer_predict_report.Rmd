@@ -34,14 +34,14 @@ The k-nearest neighbors (k-nn) algorithm was used to build a classification mode
 
 To look at whether each of the predictors might be useful to predict the tumour class, we plotted the distributions of each predictor from the training data set and coloured the distribution by class (benign: blue and malignant: orange). In doing this we see that class distributions for all of the mean and max predictors for all the measurements overlap somewhat, but do show quite a difference in their centres and spreads. This is less so for the standard error (se) predictors. In particular, the standard errors of fractal dimension, smoothness, symmetry and texture look very similar in both the distribution centre and spread. Thus, we might choose to omit these from our model.
 
-```{r predictor-distributions, echo=FALSE, fig.cap="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses.", out.width = '90%'}
+```{r predictor-distributions, echo=FALSE, fig.cap="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses.", out.width = '100%'}
 knitr::include_graphics("../results/predictor_distributions_across_class.png")
 ```
 
 Using 30-fold cross validation to choose K:
 
-```{r choosing-k, echo=FALSE, fig.cap="Figure 2. 30-fold cross validation classification accuracy as K is varied.", out.width = '40%'}
-knitr::include_graphics("../results/accuracy_vs_k.png")
+```{r choosing-k, echo=FALSE, fig.cap="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied.", out.width = '80%'}
+knitr::include_graphics("../results/kappa_vs_k.png")
 ```
 
 
@@ -50,7 +50,7 @@ knitr::include_graphics("../results/accuracy_vs_k.png")
 model_quality <- readRDS("../results/final_model_quality.rds")
 ```
 
-Our prediction model performed quite well on test data, with a final overall accuracy calculated to be `r round(model_quality$overall[1], 2)`. Other indicators that our model performed well come from the confusion matrix, where it only made 7 mistakes. However all 7 mistakes were predicting a malignant tumour as benign, given the impications this has for patients health, this model is not good enough to yet implement in the clinic.
+Our prediction model performed quite well on test data, with a final Cohen's Kappa score of `r round(model_quality$overall[2], 1)` and an overall accuracy calculated to be `r round(model_quality$overall[1], 2)`. Other indicators that our model performed well come from the confusion matrix, where it only made 7 mistakes. However all 7 mistakes were predicting a malignant tumour as benign, given the impications this has for patients health, this model is not good enough to yet implement in the clinic.
 
 
 ```{r confusion-matrix, echo=FALSE}

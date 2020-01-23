@@ -1,7 +1,7 @@
 Predicting breast cancer from digitized images of breast mass
 ================
 Tiffany A. Timbers </br>
-2019/12/30 (updated: 2020-01-20)
+2019/12/30 (updated: 2020-01-22)
 
 # Summary
 
@@ -71,7 +71,7 @@ model.
 
 <div class="figure">
 
-<img src="../results/predictor_distributions_across_class.png" alt="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses." width="90%" />
+<img src="../results/predictor_distributions_across_class.png" alt="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses." width="100%" />
 
 <p class="caption">
 
@@ -87,23 +87,24 @@ K:
 
 <div class="figure">
 
-<img src="../results/accuracy_vs_k.png" alt="Figure 2. 30-fold cross validation classification accuracy as K is varied." width="40%" />
+<img src="../results/kappa_vs_k.png" alt="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied." width="80%" />
 
 <p class="caption">
 
-Figure 2. 30-fold cross validation classification accuracy as K is
-varied.
+Figure 2. Results from 30-fold cross validation to choose K. Cohen’s
+Kappa was used as the classification metric as K was varied.
 
 </p>
 
 </div>
 
 Our prediction model performed quite well on test data, with a final
-overall accuracy calculated to be 0.95. Other indicators that our model
-performed well come from the confusion matrix, where it only made 7
-mistakes. However all 7 mistakes were predicting a malignant tumour as
-benign, given the impications this has for patients health, this model
-is not good enough to yet implement in the clinic.
+Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
+0.96. Other indicators that our model performed well come from the
+confusion matrix, where it only made 7 mistakes. However all 7 mistakes
+were predicting a malignant tumour as benign, given the impications this
+has for patients health, this model is not good enough to yet implement
+in the clinic.
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -184,7 +185,7 @@ B
 
 <td style="text-align:right;">
 
-7
+6
 
 </td>
 
@@ -206,7 +207,7 @@ M
 
 <td style="text-align:right;">
 
-46
+47
 
 </td>
 
