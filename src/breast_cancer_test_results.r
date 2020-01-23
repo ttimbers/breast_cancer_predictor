@@ -14,7 +14,7 @@ library(feather)
 library(tidyverse)
 library(caret)
 library(docopt)
-set.seed(2020)
+set.seed(2019)
 
 opt <- docopt(doc)
 
@@ -23,7 +23,7 @@ main <- function(test, out_dir) {
   # Load and wrangle test data ----------------------------------------------
   test_data <- read_feather(test) 
   x_test <- test_data %>% 
-    select(-class)
+    select(-class, -se_fractal_dimension, -se_smoothness, -se_symmetry, -se_texture)
   y_test <- test_data %>% 
     select(class) %>% 
     mutate(class = as.factor(class)) %>% 

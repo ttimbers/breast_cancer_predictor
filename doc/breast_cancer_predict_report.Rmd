@@ -19,7 +19,10 @@ library(caret)
 
 # Summary
 
+Here we attempt to build a classification model which can use breast cancer tumour image measurements to predict whether a newly discovered breast cancer tumour is benign (i.e., is not harmful and does not require treatment) or malignant (i.e., is harmful and requires treatment intervention). 
+
 # Introduction
+
 For this project we are trying to answer the question: given tumour image measurements is a newly discovered tumour benign or malignant? Answering this question is important because traditional, non-data-driven methods for tumour diagnosis are quite subjective and can depend on the diagnosing physicians skill as well as experience [@Streetetal]. Furthermore, benign tumours are not normally dangerous; the cells stay in the same place and the tumour stops growing before it gets very large. By contrast, in malignant tumours, the cells invade the surrounding tissue and spread into nearby organs where they can cause serious damage. Thus, it is important to quickly and accurately diagnose the tumour type to guide patient treatment. 
 
 # Methods
@@ -32,22 +35,22 @@ The k-nearest neighbors (k-nn) algorithm was used to build a classification mode
 
 # Results & Discussion
 
+```{r model-quality, echo=FALSE}
+model <- readRDS("../results/final_model.rds")
+model_quality <- readRDS("../results/final_model_quality.rds")
+model$bestTune
+```
+
 To look at whether each of the predictors might be useful to predict the tumour class, we plotted the distributions of each predictor from the training data set and coloured the distribution by class (benign: blue and malignant: orange). In doing this we see that class distributions for all of the mean and max predictors for all the measurements overlap somewhat, but do show quite a difference in their centres and spreads. This is less so for the standard error (se) predictors. In particular, the standard errors of fractal dimension, smoothness, symmetry and texture look very similar in both the distribution centre and spread. Thus, we might choose to omit these from our model.
 
 ```{r predictor-distributions, echo=FALSE, fig.cap="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses.", out.width = '100%'}
 knitr::include_graphics("../results/predictor_distributions_across_class.png")
 ```
 
-Using 30-fold cross validation to choose K:
+We chose to use a simple classification model using the k-nearest neighbours algorithm. To find the model that best predicted whether a tumour was benign or malignant, we performed 30-fold cross validation using Cohen's Kappa as our metric of model prediction performance to select K (number of nearest neighbours). We observed that the optimal K was `r model$bestTune$k`.
 
-```{r choosing-k, echo=FALSE, fig.cap="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied.", out.width = '80%'}
+```{r choosing-k, echo=FALSE, fig.cap="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied.", out.width = '60%'}
 knitr::include_graphics("../results/kappa_vs_k.png")
-```
-
-
-
-```{r model-quality, echo=FALSE}
-model_quality <- readRDS("../results/final_model_quality.rds")
 ```
 
 Our prediction model performed quite well on test data, with a final Cohen's Kappa score of `r round(model_quality$overall[2], 1)` and an overall accuracy calculated to be `r round(model_quality$overall[1], 2)`. Other indicators that our model performed well come from the confusion matrix, where it only made 7 mistakes. However all 7 mistakes were predicting a malignant tumour as benign, given the impications this has for patients health, this model is not good enough to yet implement in the clinic.

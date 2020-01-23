@@ -15,11 +15,11 @@ library(feather)
 library(tidyverse)
 library(caret)
 library(docopt)
-set.seed(2020)
+set.seed(2019)
 
 opt <- docopt(doc)
 train <- "data/processed/training.feather"
-
+out_dir <- "results"
 
 main <- function(train, out_dir) {
 
@@ -27,7 +27,7 @@ main <- function(train, out_dir) {
 
   train_data <- read_feather(train) 
   x_train <- train_data %>% 
-    select(-class)
+    select(-class, -se_fractal_dimension, -se_smoothness, -se_symmetry, -se_texture)
   y_train <- train_data %>% 
     select(class) %>% 
     mutate(class = as.factor(class)) %>% 
@@ -48,7 +48,7 @@ main <- function(train, out_dir) {
   try({
     dir.create(out_dir)
   })
-  ggsave(paste0(out_dir, "/kappa_vs_k.png"), width = 6, height = 4)
+  ggsave(paste0(out_dir, "/kappa_vs_k.png"), width = 5, height = 3)
   
   # Fit final model ---------------------------------------------------------
   final_model <- train(x = x_train, y = y_train, method = "knn", 

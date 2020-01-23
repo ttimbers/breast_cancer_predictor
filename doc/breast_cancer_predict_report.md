@@ -5,6 +5,12 @@ Tiffany A. Timbers </br>
 
 # Summary
 
+Here we attempt to build a classification model which can use breast
+cancer tumour image measurements to predict whether a newly discovered
+breast cancer tumour is benign (i.e., is not harmful and does not
+require treatment) or malignant (i.e., is harmful and requires treatment
+intervention).
+
 # Introduction
 
 For this project we are trying to answer the question: given tumour
@@ -57,6 +63,9 @@ report can be found here:
 
 # Results & Discussion
 
+    ##   k
+    ## 1 5
+
 To look at whether each of the predictors might be useful to predict the
 tumour class, we plotted the distributions of each predictor from the
 training data set and coloured the distribution by class (benign: blue
@@ -82,12 +91,17 @@ predictors between benign and malignant tumour masses.
 
 </div>
 
-Using 30-fold cross validation to choose
-K:
+We chose to use a simple classification model using the k-nearest
+neighbours algorithm. To find the model that best predicted whether a
+tumour was benign or malignant, we performed 30-fold cross validation
+using Cohen’s Kappa as our metric of model prediction performance to
+select K (number of nearest neighbours). We observed that the optimal K
+was
+5.
 
 <div class="figure">
 
-<img src="../results/kappa_vs_k.png" alt="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied." width="80%" />
+<img src="../results/kappa_vs_k.png" alt="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied." width="60%" />
 
 <p class="caption">
 
@@ -100,7 +114,7 @@ Kappa was used as the classification metric as K was varied.
 
 Our prediction model performed quite well on test data, with a final
 Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
-0.96. Other indicators that our model performed well come from the
+0.97. Other indicators that our model performed well come from the
 confusion matrix, where it only made 7 mistakes. However all 7 mistakes
 were predicting a malignant tumour as benign, given the impications this
 has for patients health, this model is not good enough to yet implement
@@ -185,7 +199,7 @@ B
 
 <td style="text-align:right;">
 
-6
+4
 
 </td>
 
@@ -207,7 +221,7 @@ M
 
 <td style="text-align:right;">
 
-47
+49
 
 </td>
 
