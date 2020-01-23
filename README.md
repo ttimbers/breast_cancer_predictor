@@ -23,7 +23,8 @@ negatives; predicting that a tumour is benign when in fact it is
 malignant. These kind of incorrect predictions could have a severly
 negative impact on a patients health outcome, thus we recommend
 continuing study to improve this prediction model before it is put into
-production in the clinic.
+production in the clinic. The final report can be found
+[here](https://ttimbers.github.io/breast_cancer_predictor/doc/breast_cancer_predict_report.html).
 
 The data set that was used in this project is of digitized breast cancer
 image features created by Dr. William H. Wolberg, W. Nick Street, and
@@ -38,9 +39,6 @@ of an image of a tumour sample, including the diagnosis (benign or
 malignant) and several other measurements (e.g., nucleus texture,
 perimeter, area, etc.). Diagnosis for each image was conducted by
 physicians.
-
-The final report can be found
-[here](src/breast_cancer_predict_report.md).
 
 ## Usage
 
