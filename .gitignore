@@ -3,3 +3,6 @@
 **.Rproj
 **.Rproj.user/
 .Rproj.user
+.Rhistory
+Makefile
+runall.sh

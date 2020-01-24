@@ -1,7 +1,7 @@
 Predicting breast cancer from digitized images of breast mass
 ================
 Tiffany A. Timbers </br>
-2019/12/30 (updated: 2020-01-22)
+2019/12/30 (updated: 2020-01-23)
 
 # Summary
 

@@ -60,7 +60,8 @@ somewhat, but do show quite a difference in their centres and spreads.
 This is less so for the standard error (se) predictors. In particular,
 the standard errors of fractal dimension, smoothness, symmetry and
 texture look very similar in both the distribution centre and spread.
-Thus, we might choose to omit these from our model.
+Thus, we might choose to omit these from our
+model.
 
 ![](breast_cancer_eda_files/figure-gfm/predictor%20distributions-1.png)<!-- -->
 
@@ -69,7 +70,7 @@ malignant (M) tumour cases.
 
 # References
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 
 <div id="ref-Dua2019">
 

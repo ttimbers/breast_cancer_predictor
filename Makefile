@@ -30,5 +30,6 @@ doc/breast_cancer_predict_report.md: doc/breast_cancer_predict_report.Rmd doc/br
 clean: 
 	rm -rf data
 	rm -rf results
-	rm -rf doc/breast_cancer_predict_report.md
+	rm -rf doc/breast_cancer_predict_report.md doc/breast_cancer_predict_report.html
+	
 			
