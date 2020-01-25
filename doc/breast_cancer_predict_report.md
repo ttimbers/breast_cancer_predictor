@@ -1,7 +1,7 @@
 Predicting breast cancer from digitized images of breast mass
 ================
 Tiffany A. Timbers </br>
-2019/12/30 (updated: 2020-01-23)
+2019/12/30 (updated: 2020-01-24)
 
 # Summary
 
@@ -22,22 +22,29 @@ production in the clinic.
 
 # Introduction
 
-TO ADD: General introduction about the problem, and why it is important
-(e.g., how prevalent breast cancer is, the mortality rate for
-undiagnosed cancer, etc).
+Women have a 12.1% lifetime probability of developing breast cancer, and
+although cancer treatment has improved over the last 30 years, the
+projected death rate for women’s breast cancer is 22.4 deaths per
+100,000 in 2019 (Canadian Cancer Statistics Advisory Committee 2019).
+Early detection has been shown to improve outcomes (Canadian Cancer
+Statistics Advisory Committee 2019), and thus methods, assays and
+technologies that help to improve diagnosis may be beneficial for
+improving outcomes further.
 
-For this project we are trying to answer the question: given tumour
-image measurements is a newly discovered tumour benign or malignant?
-Answering this question is important because traditional,
-non-data-driven methods for tumour diagnosis are quite subjective and
-can depend on the diagnosing physicians skill as well as experience
-(Street, Wolberg, and Mangasarian 1993). Furthermore, benign tumours are
-not normally dangerous; the cells stay in the same place and the tumour
+Here we ask if we can use a machine learning algorithm to predict
+whether a newly discovered tumour is benign or malignant given tumour
+image measurements. Answering this question is important because
+traditional methods for tumour diagnosis are quite subjective and can
+depend on the diagnosing physicians skill as well as experience (Street,
+Wolberg, and Mangasarian 1993). Furthermore, benign tumours are not
+normally dangerous; the cells stay in the same place and the tumour
 stops growing before it gets very large. By contrast, in malignant
 tumours, the cells invade the surrounding tissue and spread into nearby
-organs where they can cause serious damage. Thus, it is important to
-quickly and accurately diagnose the tumour type to guide patient
-treatment.
+organs where they can cause serious damage. Thus, if a machine learning
+algorithm can accurately and effectively predict whether a newly
+discovered tumour benign or malignant given tumour image measurements
+this could lead to less subjective, and more scalable breast cancer
+tumour diagnosis which could contribute to better patient outcomes.
 
 # Methods
 
@@ -70,7 +77,7 @@ and Python programming languages (R Core Team 2019; Van Rossum and Drake
 2009) and the following R and Python packages were used to perform the
 analysis: caret (Jed Wing et al. 2019), docopt (de Jonge 2018), feather
 (Wickham 2019), knitr (Xie 2014), tidyverse (Wickham 2017), docopt
-(Keleshev 2014), os (Van Rossum and Drake 2009), feather (Wickham 2019)
+(Keleshev 2014), os (Van Rossum and Drake 2009), feather (McKinney 2019)
 Pandas (McKinney 2010). The code used to perform the analysis and create
 this report can be found here:
 <https://github.com/ttimbers/breast_cancer_predictor>.
@@ -127,11 +134,12 @@ Our prediction model performed quite well on test data, with a final
 Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
 0.97. Other indicators that our model performed well come from the
 confusion matrix, where it only made 4 mistakes. However all 4 mistakes
-were predicting a malignant tumour as benign, given the impications this
-has for patients health, this model is not good enough to yet implement
-in the clinic.
+were predicting a malignant tumour as benign, given the implications
+this has for patients health, this model is not good enough to yet
+implement in the
+clinic.
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 
 <caption>
 
@@ -242,12 +250,37 @@ M
 
 </table>
 
-TO ADD: Further discussion of model results, including how it might be
-improved with more work.
+To further improve this model in future with hopes of arriving one that
+could be used in the clinic, there are several things we can suggest.
+First, we could look closely at the 4 misclassified observations and
+compare them to several observations that were classified correctly
+(from both classes). The goal of this would be to see which feature(s)
+may be driving the misclassification and explore whether any feature
+engineering could be used to help the model better predict on
+observations that it currently is making mistakes on. Additionally, we
+would try seeing whether we can get improved predictions using other
+classifiers. One classifier we might try is random forest forest because
+it automatically allows for feature interaction, where k-nn does not.
+Finally, we also might improve the usability of the model in the clinic
+if we output and report the probability estimates for predictions. If we
+cannot prevent misclassifications through the approaches suggested
+above, at least reporting a probability estimates for predictions would
+allow the clinician to know how confident the model was in its
+prediction. Thus the clinician may then have the ability to perform
+additional diagnostic assays if the probability estimates for prediction
+of a given tumour class is not very high.
 
 # References
 
 <div id="refs" class="references">
+
+<div id="ref-ccsac">
+
+Canadian Cancer Statistics Advisory Committee. 2019. “Canadian Cancer
+Statistics.” *Canadian Cancer Society*.
+<http://cancer.ca/Canadian-Cancer-Statistics-2019-EN>.
+
+</div>
 
 <div id="ref-docopt">
 
@@ -288,6 +321,13 @@ edited by Stéfan van der Walt and Jarrod Millman, 51–56.
 
 </div>
 
+<div id="ref-featherpy">
+
+———. 2019. *Feather: Simple Wrapper Library to the Apache Arrow-Based
+Feather File Format*. <https://github.com/wesm/feather>.
+
+</div>
+
 <div id="ref-R">
 
 R Core Team. 2019. *R: A Language and Environment for Statistical
@@ -320,7 +360,7 @@ Wickham, Hadley. 2017. *Tidyverse: Easily Install and Load the
 
 </div>
 
-<div id="ref-feather">
+<div id="ref-featherr">
 
 ———. 2019. *Feather: R Bindings to the Feather ’Api’*.
 <https://CRAN.R-project.org/package=feather>.
