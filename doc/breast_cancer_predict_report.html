@@ -410,8 +410,8 @@ summary {
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>TO ADD: General introduction about the problem, and why it is important (e.g., how prevalent breast cancer is, the mortality rate for undiagnosed cancer, etc). <span class="citation">Canadian Cancer Statistics Advisory Committee (2019)</span></p>
-<p>For this project we are trying to answer the question: given tumour image measurements is a newly discovered tumour benign or malignant? Answering this question is important because traditional, non-data-driven methods for tumour diagnosis are quite subjective and can depend on the diagnosing physicians skill as well as experience <span class="citation">(Street, Wolberg, and Mangasarian 1993)</span>. Furthermore, benign tumours are not normally dangerous; the cells stay in the same place and the tumour stops growing before it gets very large. By contrast, in malignant tumours, the cells invade the surrounding tissue and spread into nearby organs where they can cause serious damage. Thus, it is important to quickly and accurately diagnose the tumour type to guide patient treatment.</p>
+<p>Women have a 12.1% lifetime probability of developing breast cancer, and although cancer treatment has improved over the last 30 years, the projected death rate for women’s breast cancer is 22.4 deaths per 100,000 in 2019 <span class="citation">(Canadian Cancer Statistics Advisory Committee 2019)</span>. Early detection has been shown to improve outcomes <span class="citation">(Canadian Cancer Statistics Advisory Committee 2019)</span>, and thus methods, assays and technologies that help to improve diagnosis may be beneficial for improving outcomes further.</p>
+<p>Here we ask if we can use a machine learning algorithm to predict whether a newly discovered tumour benign or malignant given tumour image measurements. Answering this question is important because traditional methods for tumour diagnosis are quite subjective and can depend on the diagnosing physicians skill as well as experience <span class="citation">(Street, Wolberg, and Mangasarian 1993)</span>. Furthermore, benign tumours are not normally dangerous; the cells stay in the same place and the tumour stops growing before it gets very large. By contrast, in malignant tumours, the cells invade the surrounding tissue and spread into nearby organs where they can cause serious damage. Thus, if a machine learning algorithm can accurately and effectively predict whether a newly discovered tumour benign or malignant given tumour image measurements this could lead to less subjective, and more scalable breast cancer tumour diagnosis which could contribute to better patient outcomes.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
@@ -421,7 +421,7 @@ summary {
 </div>
 <div id="analysis" class="section level2">
 <h2>Analysis</h2>
-<p>The k-nearest neighbors (k-nn) algorithm was used to build a classification model to predict whether a tumour mass was benign or malignant (found in the class column of the data set). All variables included in the original data set, with the exception of the standard error of fractal dimension, smoothness, symmetry and texture were used to fit the model. The hyperparameter <span class="math inline">\(K\)</span> was chosen using 30-fold cross validation with Cohen’s Kappa as the classification metric. The R and Python programming languages <span class="citation">(R Core Team 2019; Van Rossum and Drake 2009)</span> and the following R and Python packages were used to perform the analysis: caret <span class="citation">(Jed Wing et al. 2019)</span>, docopt <span class="citation">(de Jonge 2018)</span>, feather <span class="citation">(Wickham 2019)</span>, knitr <span class="citation">(Xie 2014)</span>, tidyverse <span class="citation">(Wickham 2017)</span>, docopt <span class="citation">(Keleshev 2014)</span>, os <span class="citation">(Van Rossum and Drake 2009)</span>, feather <span class="citation">(Wickham 2019)</span> Pandas <span class="citation">(McKinney 2010)</span>. The code used to perform the analysis and create this report can be found here: <a href="https://github.com/ttimbers/breast_cancer_predictor" class="uri">https://github.com/ttimbers/breast_cancer_predictor</a>.</p>
+<p>The k-nearest neighbors (k-nn) algorithm was used to build a classification model to predict whether a tumour mass was benign or malignant (found in the class column of the data set). All variables included in the original data set, with the exception of the standard error of fractal dimension, smoothness, symmetry and texture were used to fit the model. The hyperparameter <span class="math inline">\(K\)</span> was chosen using 30-fold cross validation with Cohen’s Kappa as the classification metric. The R and Python programming languages <span class="citation">(R Core Team 2019; Van Rossum and Drake 2009)</span> and the following R and Python packages were used to perform the analysis: caret <span class="citation">(Jed Wing et al. 2019)</span>, docopt <span class="citation">(de Jonge 2018)</span>, feather <span class="citation">(Wickham 2019)</span>, knitr <span class="citation">(Xie 2014)</span>, tidyverse <span class="citation">(Wickham 2017)</span>, docopt <span class="citation">(Keleshev 2014)</span>, os <span class="citation">(Van Rossum and Drake 2009)</span>, feather <span class="citation">(McKinney 2019)</span> Pandas <span class="citation">(McKinney 2010)</span>. The code used to perform the analysis and create this report can be found here: <a href="https://github.com/ttimbers/breast_cancer_predictor" class="uri">https://github.com/ttimbers/breast_cancer_predictor</a>.</p>
 </div>
 </div>
 <div id="results-discussion" class="section level1">
@@ -519,6 +519,9 @@ M
 <div id="ref-mckinney-proc-scipy-2010">
 <p>McKinney, Wes. 2010. “Data Structures for Statistical Computing in Python.” In <em>Proceedings of the 9th Python in Science Conference</em>, edited by Stéfan van der Walt and Jarrod Millman, 51–56.</p>
 </div>
+<div id="ref-featherpy">
+<p>———. 2019. <em>Feather: Simple Wrapper Library to the Apache Arrow-Based Feather File Format</em>. <a href="https://github.com/wesm/feather">https://github.com/wesm/feather</a>.</p>
+</div>
 <div id="ref-R">
 <p>R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
 </div>
@@ -531,7 +534,7 @@ M
 <div id="ref-tidyverse">
 <p>Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.</p>
 </div>
-<div id="ref-feather">
+<div id="ref-featherr">
 <p>———. 2019. <em>Feather: R Bindings to the Feather ’Api’</em>. <a href="https://CRAN.R-project.org/package=feather">https://CRAN.R-project.org/package=feather</a>.</p>
 </div>
 <div id="ref-knitr">
