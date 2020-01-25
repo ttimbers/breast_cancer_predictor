@@ -22,7 +22,6 @@ set.seed(2019)
 sklearn_neighbours <- import("sklearn.neighbors")
 sklearn_model_selection <- import("sklearn.model_selection")
 sklearn_metrics <- import("sklearn.metrics")
-#from sklearn.metrics import cohen_kappa_score, make_scorer
 
 opt <- docopt(doc)
 
