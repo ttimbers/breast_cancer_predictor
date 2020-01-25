@@ -1,10 +1,10 @@
 # author: Tiffany Timbers
 # date: 2019-12-28
 
-"Fits a k-nn model on the pre-processed training data from the Wisconsin breast cancer data (from http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data).
-Saves the model as a rds file.
+"Fits a k-nn model on the pre-processed training data from the Wisconsin breast cancer data (from http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data)
+Saves the model as a rds file. Uses caret to fit classifier.
 
-Usage: src/fit_breast_cancer_predict_model.r --train=<train> --out_dir=<out_dir>
+Usage: src/reticulate_fit_breast_cancer_predict_model.r --train=<train> --out_dir=<out_dir>
   
 Options:
 --train=<train>     Path (including filename) to training data (which needs to be saved as a feather file)
@@ -18,8 +18,6 @@ library(docopt)
 set.seed(2019)
 
 opt <- docopt(doc)
-train <- "data/processed/training.feather"
-out_dir <- "results"
 
 main <- function(train, out_dir) {
 
@@ -48,7 +46,7 @@ main <- function(train, out_dir) {
   try({
     dir.create(out_dir)
   })
-  ggsave(paste0(out_dir, "/kappa_vs_k.png"), width = 5, height = 3)
+  ggsave(paste0(out_dir, "/kappa_vs_k.png"), kappa_vs_k, width = 5, height = 3)
   
   # Fit final model ---------------------------------------------------------
   final_model <- train(x = x_train, y = y_train, method = "knn", 
