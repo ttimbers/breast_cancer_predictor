@@ -28,29 +28,16 @@ The final report can be found [here](https://ttimbers.github.io/breast_cancer_pr
 
 ## Usage
 
-To replicate the analysis, clone this GitHub repository, install the [dependencies](#dependencies) listed below, and run the following commands at the command line/terminal from the root directory of this project:
+To replicate the analysis, clone this GitHub repository, install the [dependencies](#dependencies) listed below, and run the following command at the command line/terminal from the root directory of this project:
 
 ```
-# download data
-python src/download_data.py --out_type=feather --url=http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data --out_file=data/raw/wdbc.feather
+make all
+```
 
-# run eda report
-Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')"
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
 
-# pre-process data 
-Rscript src/pre_process_wisc.r --input=data/raw/wdbc.feather --out_dir=data/processed 
-
-# create exploratory data analysis figure and write to file 
-Rscript src/eda_wisc.r --train=data/processed/training.feather --out_dir=results
-
-# tune model
-Rscript src/fit_breast_cancer_predict_model.r --train=data/processed/training.feather --out_dir=results
-
-# test model
-Rscript src/breast_cancer_test_results.r --test=data/processed/test.feather --out_dir=results
-
-# render final report
-Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_format = 'github_document')"
+```
+make clean
 ```
 
 ## Dependencies
@@ -66,6 +53,7 @@ Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_for
   - caret==6.0-84
   - ggridges==0.5.1
   - ggthemes==4.2.0
+- GNU make 4.2.1
   
 ## License
 The Breast Cancer Predictor materials here are licensed under the Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA). If re-using/re-mixing please provide attribution and link to this webpage.
