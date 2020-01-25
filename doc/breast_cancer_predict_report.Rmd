@@ -28,7 +28,9 @@ Here we attempt to build a classification model using the k-nearest neighbours a
 
 # Introduction
 
-TO ADD: General introduction about the problem, and why it is important (e.g., how prevalent breast cancer is, the mortality rate for undiagnosed cancer, etc).
+
+
+TO ADD: General introduction about the problem, and why it is important (e.g., how prevalent breast cancer is, the mortality rate for undiagnosed cancer, etc). @ccsac
 
 For this project we are trying to answer the question: given tumour image measurements is a newly discovered tumour benign or malignant? Answering this question is important because traditional, non-data-driven methods for tumour diagnosis are quite subjective and can depend on the diagnosing physicians skill as well as experience [@Streetetal]. Furthermore, benign tumours are not normally dangerous; the cells stay in the same place and the tumour stops growing before it gets very large. By contrast, in malignant tumours, the cells invade the surrounding tissue and spread into nearby organs where they can cause serious damage. Thus, it is important to quickly and accurately diagnose the tumour type to guide patient treatment. 
 
@@ -54,17 +56,17 @@ We chose to use a simple classification model using the k-nearest neighbours alg
 knitr::include_graphics("../results/kappa_vs_k.png")
 ```
 
-Our prediction model performed quite well on test data, with a final Cohen's Kappa score of `r round(model_quality$overall[2], 1)` and an overall accuracy calculated to be `r round(model_quality$overall[1], 2)`. Other indicators that our model performed well come from the confusion matrix, where it only made `r model_quality$table[2, 1] + model_quality$table[1, 2]` mistakes. However all `r model_quality$table[2, 1] + model_quality$table[1, 2]` mistakes were predicting a malignant tumour as benign, given the impications this has for patients health, this model is not good enough to yet implement in the clinic.
+Our prediction model performed quite well on test data, with a final Cohen's Kappa score of `r round(model_quality$overall[2], 1)` and an overall accuracy calculated to be `r round(model_quality$overall[1], 2)`. Other indicators that our model performed well come from the confusion matrix, where it only made `r model_quality$table[2, 1] + model_quality$table[1, 2]` mistakes. However all `r model_quality$table[2, 1] + model_quality$table[1, 2]` mistakes were predicting a malignant tumour as benign, given the implications this has for patients health, this model is not good enough to yet implement in the clinic.
 
 
 ```{r confusion-matrix, echo=FALSE}
 kable(model_quality$table, caption = "Table 1. Confusion matrix of model performance on test data.") %>%
-  kable_styling() %>%
+  kable_styling(full_width = FALSE) %>%
   add_header_above(c(" ", "Reference" = 2)) %>% 
   pack_rows("Predicted", 1, 2)
 ```
 
-TO ADD: Further discussion of model results, including how it might be improved with more work.
+To further improve this model in future with hopes of arriving one that could be used in the clinic, there are several things we can suggest. First, we could look closely at the 4 misclassified observations and compare them to several observations that were classified correctly (from both classes). The goal of this would be to see which feature(s) may be driving the misclassification and explore whether any feature engineering could be used to help the model better predict on observations that it currently is making mistakes on. Additionally, we would try seeing whether we can get improved predictions using other classifiers. One classifier we might try is random forest forest because it automatically allows for feature interaction, where k-nn does not. Finally, we also might improve the usability of the model in the clinic if we output and report the probability estimates for predictions. If we cannot prevent misclassifications through the approaches suggested above, at least reporting a probability estimates for predictions would allow the clinician to know how confident the model was in its prediction. Thus the clinician may then have the ability to perform additional diagnostic assays if the probability estimates for prediction of a given tumour class is not very high.
 
 # References
 
