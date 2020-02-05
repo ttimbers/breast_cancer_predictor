@@ -1,7 +1,7 @@
 Predicting breast cancer from digitized images of breast mass
 ================
 Tiffany A. Timbers </br>
-2019/12/30 (updated: 2020-01-25)
+2019/12/30 (updated: 2020-02-05)
 
 # Summary
 
@@ -93,8 +93,7 @@ somewhat, but do show quite a difference in their centres and spreads.
 This is less so for the standard error (se) predictors. In particular,
 the standard errors of fractal dimension, smoothness, symmetry and
 texture look very similar in both the distribution centre and spread.
-Thus, we choose to omit these from our
-model.
+Thus, we choose to omit these from our model.
 
 <div class="figure">
 
@@ -114,8 +113,7 @@ neighbours algorithm. To find the model that best predicted whether a
 tumour was benign or malignant, we performed 30-fold cross validation
 using Cohen’s Kappa as our metric of model prediction performance to
 select K (number of nearest neighbours). We observed that the optimal K
-was
-5.
+was 5.
 
 <div class="figure">
 
@@ -136,15 +134,13 @@ Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
 confusion matrix, where it only made 4 mistakes. However all 4 mistakes
 were predicting a malignant tumour as benign, given the implications
 this has for patients health, this model is not good enough to yet
-implement in the
-clinic.
+implement in the clinic.
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 
 <caption>
 
-Table 1. Confusion matrix of model performance on test
-data.
+Table 1. Confusion matrix of model performance on test data.
 
 </caption>
 
