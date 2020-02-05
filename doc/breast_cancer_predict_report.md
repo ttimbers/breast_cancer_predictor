@@ -93,40 +93,20 @@ somewhat, but do show quite a difference in their centres and spreads.
 This is less so for the standard error (se) predictors. In particular,
 the standard errors of fractal dimension, smoothness, symmetry and
 texture look very similar in both the distribution centre and spread.
-Thus, we choose to omit these from our model.
+Thus, we choose to omit these from our
+model.
 
-<div class="figure">
-
-<img src="../results/predictor_distributions_across_class.png" alt="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses." width="100%" />
-
-<p class="caption">
-
-Figure 1. Comparison of the empirical distributions of training data
-predictors between benign and malignant tumour masses.
-
-</p>
-
-</div>
+<img src="../results/predictor_distributions_across_class.png" title="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses." alt="Figure 1. Comparison of the empirical distributions of training data predictors between benign and malignant tumour masses." width="100%" />
 
 We chose to use a simple classification model using the k-nearest
 neighbours algorithm. To find the model that best predicted whether a
 tumour was benign or malignant, we performed 30-fold cross validation
 using Cohen’s Kappa as our metric of model prediction performance to
 select K (number of nearest neighbours). We observed that the optimal K
-was 5.
+was
+5.
 
-<div class="figure">
-
-<img src="../results/kappa_vs_k.png" alt="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied." width="60%" />
-
-<p class="caption">
-
-Figure 2. Results from 30-fold cross validation to choose K. Cohen’s
-Kappa was used as the classification metric as K was varied.
-
-</p>
-
-</div>
+<img src="../results/kappa_vs_k.png" title="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied." alt="Figure 2. Results from 30-fold cross validation to choose K. Cohen's Kappa was used as the classification metric as K was varied." width="60%" />
 
 Our prediction model performed quite well on test data, with a final
 Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
@@ -134,13 +114,15 @@ Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be
 confusion matrix, where it only made 4 mistakes. However all 4 mistakes
 were predicting a malignant tumour as benign, given the implications
 this has for patients health, this model is not good enough to yet
-implement in the clinic.
+implement in the
+clinic.
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 
 <caption>
 
-Table 1. Confusion matrix of model performance on test data.
+Table 1. Confusion matrix of model performance on test
+data.
 
 </caption>
 
