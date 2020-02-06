@@ -46,6 +46,28 @@ The final report can be found
 
 ## Usage
 
+There are two suggested ways to run this analysis:
+
+#### 1\. Using Docker
+
+*note - the instructions in this section also depends on running this in
+a unix shell (e.g., terminal or Git Bash)*
+
+To replicate the analysis, install
+[Docker](https://www.docker.com/get-started). Then clone this GitHub
+repository and run the following command at the command line/terminal
+from the root directory of this project:
+
+    docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor ttimbers/bc_predictor make -C /home/rstudio/breast_cancer_predictor all
+
+To reset the repo to a clean state, with no intermediate or results
+files, run the following command at the command line/terminal from the
+root directory of this project:
+
+    docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor ttimbers/bc_predictor make -C /home/rstudio/breast_cancer_predictor clean
+
+#### 2\. Without using Docker
+
 To replicate the analysis, clone this GitHub repository, install the
 [dependencies](#dependencies) listed below, and run the following
 command at the command line/terminal from the root directory of this
@@ -61,17 +83,17 @@ root directory of this project:
 
 ## Dependencies
 
-  - Python 3.7.3 and Python packages:
+  - Python 3.7.4 and Python packages:
       - docopt==0.6.2
       - requests==2.22.0
-      - pandas==0.24.2
+      - pandas==0.25.1R
       - feather-format==0.4.0
   - R version 3.6.1 and R packages:
       - knitr==1.26
       - feather==0.3.5
-      - tidyverse==1.2.1
-      - caret==6.0-84
-      - ggridges==0.5.1
+      - tidyverse==1.3.0
+      - caret==6.0-85
+      - ggridges==0.5.2
       - ggthemes==4.2.0
   - GNU make 4.2.1
 
