@@ -6,6 +6,8 @@ always_allow_html: true
 output: 
   html_document:
     toc: true
+  github_document:
+    toc: true
 bibliography: breast_cancer_refs.bib
 ---
 
