@@ -26,7 +26,7 @@ results/final_model_quality.rds: src/breast_cancer_test_results.r data/processed
 
 # render report
 doc/breast_cancer_predict_report.md: doc/breast_cancer_predict_report.Rmd doc/breast_cancer_refs.bib
-	Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_format = 'all')"
+	Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd')"
 
 clean: 
 	rm -rf data
