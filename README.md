@@ -57,14 +57,27 @@ To replicate the analysis, install
 repository and run the following command at the command line/terminal
 from the root directory of this project:
 
+```bash
     docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C /home/rstudio/breast_cancer_predictor all
-
+```
 To reset the repo to a clean state, with no intermediate or results
 files, run the following command at the command line/terminal from the
 root directory of this project:
 
+```bash
     docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C /home/rstudio/breast_cancer_predictor clean
+```
 
+**Note: If you are on Windows, the commands should be written with two `//` to separate paths. So you will type:***
+
+```bash
+docker run --rm -v /$(pwd)://home//rstudio//breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C //home//rstudio//breast_cancer_predictor all
+```
+**and**
+
+```bash
+ docker run --rm -v /$(pwd)://home//rstudio//breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C //home//rstudio//breast_cancer_predictor clean
+```
 #### 2\. Without using Docker
 
 To replicate the analysis, clone this GitHub repository, install the
