@@ -68,15 +68,15 @@ root directory of this project:
     docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C /home/rstudio/breast_cancer_predictor clean
 ```
 
-**Note: If you are on Windows, the commands should be written with two `//` to separate paths. So you will type:***
+**Note: If you are using Git Bash on Windows, the paths should be written with two forward slashes `//`. In this case you should type:***
 
 ```bash
-docker run --rm -v /$(pwd)://home//rstudio//breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C //home//rstudio//breast_cancer_predictor all
+    docker run --rm -v /$(pwd)://home//rstudio//breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C //home//rstudio//breast_cancer_predictor all
 ```
-**and**
+**and to the reset the repo to a clean state**
 
 ```bash
- docker run --rm -v /$(pwd)://home//rstudio//breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C //home//rstudio//breast_cancer_predictor clean
+    docker run --rm -v /$(pwd)://home//rstudio//breast_cancer_predictor ttimbers/bc_predictor:v4.0 make -C //home//rstudio//breast_cancer_predictor clean
 ```
 #### 2\. Without using Docker
 
