@@ -11,51 +11,53 @@ Options:
 --out_dir=<out_dir>   Path to directory where the processed data should be written
 " -> doc
 
-library(feather)
+
 library(tidyverse)
 library(caret)
+library(tidymodels)
 library(docopt)
+library(arrow) 
 set.seed(2020)
 
 opt <- docopt(doc)
 main <- function(input, out_dir){
   # read data and convert class to factor
-  raw_data <- read_feather(input) 
+  raw_data <- arrow::read_feather(input) 
   colnames(raw_data) <- c("id",
-                         "class",
-                         "mean_radius",
-                         "mean_texture",
-                         "mean_perimeter", 
-                         "mean_area",
-                         "mean_smoothness",
-                         "mean_compactness",
-                         "mean_concavity",
-                         "mean_concave_points",
-                         "mean_symmetry",
-                         "mean_fractal_dimension",
-                         "se_radius",
-                         "se_texture",
-                         "se_perimeter", 
-                         "se_area",
-                         "se_smoothness",
-                         "se_compactness",
-                         "se_concavity",
-                         "se_concave_points",
-                         "se_symmetry",
-                         "se_fractal_dimension",
-                         "max_radius",
-                         "max_texture",
-                         "max_perimeter", 
-                         "max_area",
-                         "max_smoothness",
-                         "max_compactness",
-                         "max_concavity",
-                         "max_concave_points",
-                         "max_symmetry",
-                         "max_fractal_dimension")
+                          "class",
+                          "mean_radius",
+                          "mean_texture",
+                          "mean_perimeter", 
+                          "mean_area",
+                          "mean_smoothness",
+                          "mean_compactness",
+                          "mean_concavity",
+                          "mean_concave_points",
+                          "mean_symmetry",
+                          "mean_fractal_dimension",
+                          "se_radius",
+                          "se_texture",
+                          "se_perimeter", 
+                          "se_area",
+                          "se_smoothness",
+                          "se_compactness",
+                          "se_concavity",
+                          "se_concave_points",
+                          "se_symmetry",
+                          "se_fractal_dimension",
+                          "max_radius",
+                          "max_texture",
+                          "max_perimeter", 
+                          "max_area",
+                          "max_smoothness",
+                          "max_compactness",
+                          "max_concavity",
+                          "max_concave_points",
+                          "max_symmetry",
+                          "max_fractal_dimension")
   raw_data <- raw_data |> 
     select(-id)    
-    mutate(class = as.factor(class))
+  mutate(class = as.factor(class))
   
   # split into training and test data sets
   training_rows <- raw_data |> 
