@@ -22,7 +22,7 @@ set.seed(2020)
 opt <- docopt(doc)
 main <- function(input, out_dir){
   # read data and convert class to factor
-  raw_data <- arrow::read_feather(input) 
+  raw_data <- arrow::read_feather("data/raw/wdbc.feather") #input
   colnames(raw_data) <- c("id",
                           "class",
                           "mean_radius",
@@ -56,35 +56,31 @@ main <- function(input, out_dir){
                           "max_symmetry",
                           "max_fractal_dimension")
   raw_data <- raw_data |> 
-    select(-id)    
+    select(-id) |>    
   mutate(class = as.factor(class))
   
   # split into training and test data sets
-  training_rows <- raw_data |> 
-    select(class) |> 
-    pull() |>
-    createDataPartition(p = 0.75, list = FALSE)
-  training_data <- raw_data |> slice(training_rows)
-  test_data <- raw_data |> slice(-training_rows)
+  split <- rsample::initial_split(raw_data, prop = 0.75)
+  training_data <- rsample::training(split)
+  testing_data <- rsample::testing(split)
   
   # scale test data using scale factor
-  x_train <- training_data |> 
-    select(-class) 
-  x_test <- test_data |> 
-    select(-class)
-  pre_process_scaler <- preProcess(x_train, method = c("center", "scale"))
-  x_train_scaled <- predict(pre_process_scaler, x_train)
-  x_test_scaled <- predict(pre_process_scaler, x_test)
-  training_scaled <- x_train_scaled |> 
-    mutate(class = training_data |> select(class) |> pull())
-  test_scaled <- x_test_scaled |> 
-    mutate(class = test_data |> select(class) |> pull())
+   class_rec <- recipes::recipe(class ~ ., data = training_data) 
+  sum_rec <- summary(class_rec)
+  
+  # scale test data using scale factor
+
+  training_scaled <- prep(class_rec) |> 
+    bake(new_data = NULL)
+  
+  test_scaled <- prep(class_rec) |> 
+    bake(new_data = testing_data)
   
   # write scale factor to a file
   try({
     dir.create(out_dir)
   })
-  saveRDS(pre_process_scaler, file = paste0(out_dir, "/scale_factor.rds"))
+ # saveRDS(sum_rec, file = paste0(out_dir, "/recipe.rds"))
   
   # write training and test data to feather files
   write_feather(training_scaled, paste0(out_dir, "/training.feather"))
