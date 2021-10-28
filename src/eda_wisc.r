@@ -24,9 +24,9 @@ opt <- docopt(doc)
 main <- function(train, out_dir) {
 
   # visualize predictor distributions by class
-  train_data <- read_feather(train) %>% 
-    gather(key = predictor, value = value, -class) %>% 
-    mutate(predictor = str_replace_all(predictor, "_", " ")) %>% 
+  train_data <- read_feather(train)  |>  
+    gather(key = predictor, value = value, -class) |> 
+    mutate(predictor = str_replace_all(predictor, "_", " ")) |> 
     ggplot(aes(x = value, y = class, colour = class, fill = class)) +
     facet_wrap(. ~ predictor, scale = "free", ncol = 4) +
     geom_density_ridges(alpha = 0.8) +

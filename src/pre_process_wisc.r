@@ -53,30 +53,30 @@ main <- function(input, out_dir){
                          "max_concave_points",
                          "max_symmetry",
                          "max_fractal_dimension")
-  raw_data <- raw_data %>% 
-    select(-id) %>% 
+  raw_data <- raw_data |> 
+    select(-id)    
     mutate(class = as.factor(class))
   
   # split into training and test data sets
-  training_rows <- raw_data %>% 
-    select(class) %>% 
-    pull() %>%
+  training_rows <- raw_data |> 
+    select(class) |> 
+    pull() |>
     createDataPartition(p = 0.75, list = FALSE)
-  training_data <- raw_data %>% slice(training_rows)
-  test_data <- raw_data %>% slice(-training_rows)
+  training_data <- raw_data |> slice(training_rows)
+  test_data <- raw_data |> slice(-training_rows)
   
   # scale test data using scale factor
-  x_train <- training_data %>% 
+  x_train <- training_data |> 
     select(-class) 
-  x_test <- test_data %>% 
+  x_test <- test_data |> 
     select(-class)
   pre_process_scaler <- preProcess(x_train, method = c("center", "scale"))
   x_train_scaled <- predict(pre_process_scaler, x_train)
   x_test_scaled <- predict(pre_process_scaler, x_test)
-  training_scaled <- x_train_scaled %>% 
-    mutate(class = training_data %>% select(class) %>% pull())
-  test_scaled <- x_test_scaled %>% 
-    mutate(class = test_data %>% select(class) %>% pull())
+  training_scaled <- x_train_scaled |> 
+    mutate(class = training_data |> select(class) |> pull())
+  test_scaled <- x_test_scaled |> 
+    mutate(class = test_data |> select(class) |> pull())
   
   # write scale factor to a file
   try({
