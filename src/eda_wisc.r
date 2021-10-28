@@ -11,9 +11,8 @@ Options:
 --out_dir=<out_dir> Path to directory where the plots should be saved
 " -> doc
 
-library(feather)
+library(arrow)
 library(tidyverse)
-library(caret)
 library(docopt)
 library(ggridges)
 library(ggthemes)
@@ -24,8 +23,8 @@ opt <- docopt(doc)
 main <- function(train, out_dir) {
 
   # visualize predictor distributions by class
-  train_data <- read_feather(train)  |>  
-    gather(key = predictor, value = value, -class) |> 
+  train_data <- arrow::read_feather(train)  |>  
+    pivot_longer(names_to = "predictor", values_to = "value", -class) |> 
     mutate(predictor = str_replace_all(predictor, "_", " ")) |> 
     ggplot(aes(x = value, y = class, colour = class, fill = class)) +
     facet_wrap(. ~ predictor, scale = "free", ncol = 4) +
