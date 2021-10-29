@@ -13,7 +13,6 @@ Options:
 
 
 library(tidyverse)
-library(caret)
 library(tidymodels)
 library(docopt)
 library(arrow) 
@@ -22,7 +21,7 @@ set.seed(2020)
 opt <- docopt(doc)
 main <- function(input, out_dir){
   # read data and convert class to factor
-  raw_data <- arrow::read_feather("data/raw/wdbc.feather") #input
+  raw_data <- arrow::read_feather(input) 
   colnames(raw_data) <- c("id",
                           "class",
                           "mean_radius",
@@ -57,30 +56,31 @@ main <- function(input, out_dir){
                           "max_fractal_dimension")
   raw_data <- raw_data |> 
     select(-id) |>    
-  mutate(class = as.factor(class))
+    mutate(class = as.factor(class))
   
-  # split into training and test data sets
+  # split into training and test datasets with rsample package 
   split <- rsample::initial_split(raw_data, prop = 0.75)
   training_data <- rsample::training(split)
   testing_data <- rsample::testing(split)
   
-  # scale test data using scale factor
-   class_rec <- recipes::recipe(class ~ ., data = training_data) 
-  sum_rec <- summary(class_rec)
+  # calculate the required statistics into the recipe 
+  class_rec <- recipes::recipe(class ~ ., data = training_data) |>
+    recipes::step_scale(all_predictors()) |>
+    recipes::step_center(all_predictors()) |>
+    recipes::prep()
   
-  # scale test data using scale factor
-
-  training_scaled <- prep(class_rec) |> 
-    bake(new_data = NULL)
+  # "baking" the recipe: scaling and centering the data
+  training_scaled <- class_rec |> 
+    recipes::bake(new_data = NULL)
   
-  test_scaled <- prep(class_rec) |> 
-    bake(new_data = testing_data)
+  test_scaled <- class_rec |> 
+    recipes::bake(new_data = testing_data)
   
-  # write scale factor to a file
+  # write the recipe to a file
   try({
     dir.create(out_dir)
   })
- # saveRDS(sum_rec, file = paste0(out_dir, "/recipe.rds"))
+  saveRDS(class_rec, file = paste0(out_dir, "/scale_factor.rds"))
   
   # write training and test data to feather files
   write_feather(training_scaled, paste0(out_dir, "/training.feather"))
