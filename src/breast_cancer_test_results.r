@@ -22,11 +22,11 @@ main <- function(test, out_dir) {
 
   # Load and wrangle test data ----------------------------------------------
   test_data <- read_feather(test) 
-  x_test <- test_data %>% 
+  x_test <- test_data |> 
     select(-class, -se_fractal_dimension, -se_smoothness, -se_symmetry, -se_texture)
-  y_test <- test_data %>% 
-    select(class) %>% 
-    mutate(class = as.factor(class)) %>% 
+  y_test <- test_data |> 
+    select(class) |> 
+    mutate(class = as.factor(class))  |>  
     pull()
   
   # Load model and predict --------------------------------------------------

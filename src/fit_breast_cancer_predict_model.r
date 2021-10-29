@@ -24,11 +24,11 @@ main <- function(train, out_dir) {
   # Tune hyperparameters ----------------------------------------------------
 
   train_data <- read_feather(train) 
-  x_train <- train_data %>% 
+  x_train <- train_data |> 
     select(-class, -se_fractal_dimension, -se_smoothness, -se_symmetry, -se_texture)
-  y_train <- train_data %>% 
-    select(class) %>% 
-    mutate(class = as.factor(class)) %>% 
+  y_train <- train_data |> 
+    select(class)  |>  
+    mutate(class = as.factor(class)) |> 
     pull()
   k = data.frame(k = seq(1, 100, by = 2))
   cross_val <- trainControl(method="cv", number = 30)
@@ -37,7 +37,7 @@ main <- function(train, out_dir) {
   
   # Visualize kappa for K's ----------------------------------------------
 
-  kappa_vs_k <- model_cv_30fold$results %>% 
+  kappa_vs_k <- model_cv_30fold$results |> 
     ggplot(aes(x = k, y = Kappa)) +
       geom_point() +
       geom_errorbar(aes(ymin = Kappa - (KappaSD/sqrt(30)), ymax = Kappa + (KappaSD/sqrt(30)))) +

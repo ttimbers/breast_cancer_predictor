@@ -11,78 +11,76 @@ Options:
 --out_dir=<out_dir>   Path to directory where the processed data should be written
 " -> doc
 
-library(feather)
+
 library(tidyverse)
-library(caret)
+library(tidymodels)
 library(docopt)
+library(arrow) 
 set.seed(2020)
 
 opt <- docopt(doc)
 main <- function(input, out_dir){
   # read data and convert class to factor
-  raw_data <- read_feather(input) 
+  raw_data <- arrow::read_feather(input) 
   colnames(raw_data) <- c("id",
-                         "class",
-                         "mean_radius",
-                         "mean_texture",
-                         "mean_perimeter", 
-                         "mean_area",
-                         "mean_smoothness",
-                         "mean_compactness",
-                         "mean_concavity",
-                         "mean_concave_points",
-                         "mean_symmetry",
-                         "mean_fractal_dimension",
-                         "se_radius",
-                         "se_texture",
-                         "se_perimeter", 
-                         "se_area",
-                         "se_smoothness",
-                         "se_compactness",
-                         "se_concavity",
-                         "se_concave_points",
-                         "se_symmetry",
-                         "se_fractal_dimension",
-                         "max_radius",
-                         "max_texture",
-                         "max_perimeter", 
-                         "max_area",
-                         "max_smoothness",
-                         "max_compactness",
-                         "max_concavity",
-                         "max_concave_points",
-                         "max_symmetry",
-                         "max_fractal_dimension")
-  raw_data <- raw_data %>% 
-    select(-id) %>% 
+                          "class",
+                          "mean_radius",
+                          "mean_texture",
+                          "mean_perimeter", 
+                          "mean_area",
+                          "mean_smoothness",
+                          "mean_compactness",
+                          "mean_concavity",
+                          "mean_concave_points",
+                          "mean_symmetry",
+                          "mean_fractal_dimension",
+                          "se_radius",
+                          "se_texture",
+                          "se_perimeter", 
+                          "se_area",
+                          "se_smoothness",
+                          "se_compactness",
+                          "se_concavity",
+                          "se_concave_points",
+                          "se_symmetry",
+                          "se_fractal_dimension",
+                          "max_radius",
+                          "max_texture",
+                          "max_perimeter", 
+                          "max_area",
+                          "max_smoothness",
+                          "max_compactness",
+                          "max_concavity",
+                          "max_concave_points",
+                          "max_symmetry",
+                          "max_fractal_dimension")
+  raw_data <- raw_data |> 
+    select(-id) |>    
     mutate(class = as.factor(class))
   
-  # split into training and test data sets
-  training_rows <- raw_data %>% 
-    select(class) %>% 
-    pull() %>%
-    createDataPartition(p = 0.75, list = FALSE)
-  training_data <- raw_data %>% slice(training_rows)
-  test_data <- raw_data %>% slice(-training_rows)
+  # split into training and test datasets with rsample package 
+  split <- rsample::initial_split(raw_data, prop = 0.75)
+  training_data <- rsample::training(split)
+  testing_data <- rsample::testing(split)
   
-  # scale test data using scale factor
-  x_train <- training_data %>% 
-    select(-class) 
-  x_test <- test_data %>% 
-    select(-class)
-  pre_process_scaler <- preProcess(x_train, method = c("center", "scale"))
-  x_train_scaled <- predict(pre_process_scaler, x_train)
-  x_test_scaled <- predict(pre_process_scaler, x_test)
-  training_scaled <- x_train_scaled %>% 
-    mutate(class = training_data %>% select(class) %>% pull())
-  test_scaled <- x_test_scaled %>% 
-    mutate(class = test_data %>% select(class) %>% pull())
+  # calculate the required statistics into the recipe 
+  class_rec <- recipes::recipe(class ~ ., data = training_data) |>
+    recipes::step_scale(all_predictors()) |>
+    recipes::step_center(all_predictors()) |>
+    recipes::prep()
   
-  # write scale factor to a file
+  # "baking" the recipe: scaling and centering the data
+  training_scaled <- class_rec |> 
+    recipes::bake(new_data = NULL)
+  
+  test_scaled <- class_rec |> 
+    recipes::bake(new_data = testing_data)
+  
+  # write the recipe to a file
   try({
     dir.create(out_dir)
   })
-  saveRDS(pre_process_scaler, file = paste0(out_dir, "/scale_factor.rds"))
+  saveRDS(class_rec, file = paste0(out_dir, "/scale_factor.rds"))
   
   # write training and test data to feather files
   write_feather(training_scaled, paste0(out_dir, "/training.feather"))

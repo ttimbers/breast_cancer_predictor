@@ -30,16 +30,16 @@ main <- function(train, out_dir) {
   # Load and wrangle data ---------------------------------------------------
   
   # load training data as an R data frame
-  train_data <- read_feather("data/processed/training.feather") %>% 
+  train_data <- read_feather("data/processed/training.feather") |> 
     mutate(class = as.integer(as.factor(class)) )
   
   # create X and Y
-  X_train <- train_data %>% 
+  X_train <- train_data |> 
     select(-class)
-  y_train <- train_data %>% 
-    select(class) %>% 
-    pull(class) %>% 
-    as.factor() %>% 
+  y_train <- train_data  |>  
+    select(class) |> 
+    pull(class) |> 
+    as.factor() |> 
     as.integer()
   y_train <- y_train - 1
   
@@ -77,10 +77,10 @@ main <- function(train, out_dir) {
   ggsave(paste0(out_dir, "/kappa_vs_k.png"), kappa_vs_k, width = 5, height = 3)
   
   # Fit final model ---------------------------------------------------------
-  best_k <- cv_results %>% 
-    filter(cv_mean == max(cv_mean)) %>% 
-    select(k) %>% 
-    pull() %>%
+  best_k <- cv_results |> 
+    filter(cv_mean == max(cv_mean)) |> 
+    select(k) |> 
+    pull() |>
     as.integer()
   knn_final_model <- sklearn_neighbours$KNeighborsClassifier(n_neighbors = best_k)
   knn_final_model_fit <- knn_final_model$fit(X_train, y_train)
